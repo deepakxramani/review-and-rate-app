@@ -5,10 +5,12 @@ const notFound = require('./middleware/notFound.middleware');
 const errorHandler = require('./middleware/error.middleware');
 
 const app = express();
+const routes = require('./routes');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/api', routes);
 
 // Static folder for uploaded files
 app.use('/uploads', express.static('public/uploads'));
