@@ -4,6 +4,7 @@ const router = express.Router();
 
 const upload = require('../../middleware/upload.middleware');
 const validate = require('../../middleware/validate.middleware');
+const reviewRoutes = require('../review/review.routes');
 
 const {
   createCompanyValidation,
@@ -27,6 +28,8 @@ router.post(
 );
 
 router.get('/', getCompanies);
+
+router.use('/:companyId/reviews', reviewRoutes);
 
 router.get('/:companyId', getCompanyById);
 
