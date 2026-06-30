@@ -1,21 +1,31 @@
 const express = require('express');
 const cors = require('cors');
 
-const app = express();
+const notFound = require('./middleware/notFound.middleware');
+const errorHandler = require('./middleware/error.middleware');
 
-// Middlewares
+const app = express();
+const routes = require('./routes');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/api', routes);
 
-// Health Check Route
+// Static folder for uploaded files
+app.use('/uploads', express.static('public/uploads'));
 
 app.get('/', (req, res) => {
-  res.status(200).json({
+  res.json({
     success: true,
     message: 'Server is running 🚀',
   });
 });
+
+// 404 Middleware
+app.use(notFound);
+
+// Global Error Handler
+app.use(errorHandler);
 
 module.exports = app;
